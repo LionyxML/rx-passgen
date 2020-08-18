@@ -77,7 +77,7 @@ class PassGen:
 
     def generate(self):
         
-        #try:
+        try:
             self.qtd_special = int(self.entrySpecial.get())
             self.qtd_numbers = int(self.entryNumbers.get())
             self.qtd_lowercase = int(self.entryLower.get())
@@ -110,8 +110,8 @@ class PassGen:
             root.clipboard_clear()
             root.clipboard_append(password)
 
-        #except:
-        #    self.error("Invalid data, quantities must be integer numbers!")
+        except:
+            self.error("Invalid data, quantities must be integer numbers!")
 
     def error(self, message):
         messagebox.showerror("Error", message)
