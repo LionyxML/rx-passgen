@@ -17,13 +17,14 @@ from tkinter import (
 
 import string as s
 import random as r
+import secrets as sec
 import sys
 
 class PassGen:
     def __init__(self, root):
 
         self.root = root
-        self.root.title("rx-passgen  v0.1")
+        self.root.title("rx-passgen  v0.2")
         self.root.wm_minsize(400, 200)
         self.root.grid_anchor(anchor="c")
 
@@ -76,32 +77,28 @@ class PassGen:
 
     def generate(self):
         
-        try:
+        #try:
             self.qtd_special = int(self.entrySpecial.get())
             self.qtd_numbers = int(self.entryNumbers.get())
             self.qtd_lowercase = int(self.entryLower.get())
             self.qtd_uppercase = int(self.entryUpper.get())
 
-            self.special = list(s.punctuation)
-            self.numbers = list(s.digits)
-            self.lowercase = list(s.ascii_lowercase)
-            self.uppercase = list(s.ascii_uppercase) 
+            self.special = s.punctuation
+            self.numbers = s.digits
+            self.lowercase = s.ascii_lowercase
+            self.uppercase = s.ascii_uppercase 
 
             choosen_special = [
-                self.special[r.randint(0, len(self.special) - 1)]
-                for char in range(0, self.qtd_special)
+                sec.choice(self.special) for char in range(0, self.qtd_special)
             ]
             choosen_numbers = [
-                self.numbers[r.randint(0, len(self.numbers) - 1)]
-                for char in range(0, self.qtd_numbers)
+                sec.choice(self.numbers) for char in range(0, self.qtd_numbers)
             ]
             choosen_lowercase = [
-                self.lowercase[r.randint(0, len(self.lowercase) - 1)]
-                for char in range(0, self.qtd_lowercase)
+                sec.choice(self.lowercase) for char in range(0, self.qtd_lowercase)
             ]
             choosen_uppercase = [
-                self.uppercase[r.randint(0, len(self.uppercase) - 1)]
-                for char in range(0, self.qtd_uppercase)
+                sec.choice(self.uppercase) for char in range(0, self.qtd_uppercase)
             ]
             password = (
                 choosen_special + choosen_numbers + choosen_lowercase + choosen_uppercase
@@ -113,8 +110,8 @@ class PassGen:
             root.clipboard_clear()
             root.clipboard_append(password)
 
-        except:
-            self.error("Invalid data, quantities must be integer numbers!")
+        #except:
+        #    self.error("Invalid data, quantities must be integer numbers!")
 
     def error(self, message):
         messagebox.showerror("Error", message)
