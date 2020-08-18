@@ -20,6 +20,7 @@ import random as r
 import secrets as sec
 import sys
 
+
 class PassGen:
     def __init__(self, root):
 
@@ -66,11 +67,7 @@ class PassGen:
 
         self.line = ttk.Separator(frame)
         self.line.grid(
-            sticky="EW",
-            row=6,
-            column=1,
-            columnspan=3,
-            pady=3,
+            sticky="EW", row=6, column=1, columnspan=3, pady=3,
         )
 
         self.labelPassword = Label(frame, text="Password: ")
@@ -81,7 +78,7 @@ class PassGen:
         frame.grid()
 
     def generate(self):
-        
+
         try:
             self.qtd_special = int(self.entrySpecial.get())
             self.qtd_numbers = int(self.entryNumbers.get())
@@ -91,7 +88,7 @@ class PassGen:
             self.special = s.punctuation
             self.numbers = s.digits
             self.lowercase = s.ascii_lowercase
-            self.uppercase = s.ascii_uppercase 
+            self.uppercase = s.ascii_uppercase
 
             choosen_special = [
                 sec.choice(self.special) for char in range(0, self.qtd_special)
@@ -106,7 +103,10 @@ class PassGen:
                 sec.choice(self.uppercase) for char in range(0, self.qtd_uppercase)
             ]
             self.password = (
-                choosen_special + choosen_numbers + choosen_lowercase + choosen_uppercase
+                choosen_special
+                + choosen_numbers
+                + choosen_lowercase
+                + choosen_uppercase
             )
             self.password = "".join(r.sample(self.password, len(self.password)))
 
@@ -132,4 +132,3 @@ if __name__ == "__main__":
     passgen = PassGen(root)
     passgen.main()
     root.mainloop()
-
