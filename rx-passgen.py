@@ -23,6 +23,7 @@ import sys
 class PassGen:
     def __init__(self, root):
 
+        self.password = ""
         self.root = root
         self.root.title("rx-passgen  v0.2")
         self.root.wm_minsize(400, 200)
@@ -56,8 +57,12 @@ class PassGen:
         self.entryUpper.insert(0, "3")
 
         self.Gen = Button(frame, text="Generate", width=10)
-        self.Gen.grid(row=5, column=1, columnspan=3, pady=3, sticky="NSEW")
+        self.Gen.grid(row=5, column=1, columnspan=2, pady=2, sticky="NSEW")
         self.Gen.config(command=self.generate)
+
+        self.Copy = Button(frame, text="Copy to Clipboard", width=10)
+        self.Copy.grid(row=8, column=2, columnspan=1, pady=1, sticky="NSEW")
+        self.Copy.config(command=self.copyClipboard)
 
         self.line = ttk.Separator(frame)
         self.line.grid(
@@ -69,7 +74,7 @@ class PassGen:
         )
 
         self.labelPassword = Label(frame, text="Password: ")
-        self.labelPassword.grid(row=7, column=1, sticky="w")
+        self.labelPassword.grid(row=7, column=1, pady=1, rowspan=2, sticky="w")
         self.entryPassword = Entry(frame)
         self.entryPassword.grid(row=7, column=2, sticky="w")
 
@@ -100,18 +105,20 @@ class PassGen:
             choosen_uppercase = [
                 sec.choice(self.uppercase) for char in range(0, self.qtd_uppercase)
             ]
-            password = (
+            self.password = (
                 choosen_special + choosen_numbers + choosen_lowercase + choosen_uppercase
             )
-            password = "".join(r.sample(password, len(password)))
+            self.password = "".join(r.sample(self.password, len(self.password)))
 
             self.entryPassword.delete(0, END)
-            self.entryPassword.insert(0, password)
-            root.clipboard_clear()
-            root.clipboard_append(password)
+            self.entryPassword.insert(0, self.password)
 
         except:
             self.error("Invalid data, quantities must be integer numbers!")
+
+    def copyClipboard(self):
+        root.clipboard_clear()
+        root.clipboard_append(self.password)
 
     def error(self, message):
         messagebox.showerror("Error", message)
