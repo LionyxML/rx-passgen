@@ -2,23 +2,18 @@
 
 from tkinter import (
     Tk,
-    Grid,
     Frame,
     Entry,
     Button,
     Label,
     END,
     ttk,
-    VERTICAL,
-    Checkbutton,
-    IntVar,
     messagebox,
 )
 
 import string as s
 import random as r
 import secrets as sec
-import sys
 
 
 class PassGen:
@@ -67,7 +62,11 @@ class PassGen:
 
         self.line = ttk.Separator(frame)
         self.line.grid(
-            sticky="EW", row=6, column=1, columnspan=3, pady=3,
+            sticky="EW",
+            row=6,
+            column=1,
+            columnspan=3,
+            pady=3,
         )
 
         self.labelPassword = Label(frame, text="Password: ")
@@ -97,10 +96,12 @@ class PassGen:
                 sec.choice(self.numbers) for char in range(0, self.qtd_numbers)
             ]
             choosen_lowercase = [
-                sec.choice(self.lowercase) for char in range(0, self.qtd_lowercase)
+                sec.choice(self.lowercase)
+                for char in range(0, self.qtd_lowercase)
             ]
             choosen_uppercase = [
-                sec.choice(self.uppercase) for char in range(0, self.qtd_uppercase)
+                sec.choice(self.uppercase)
+                for char in range(0, self.qtd_uppercase)
             ]
             self.password = (
                 choosen_special
@@ -108,12 +109,14 @@ class PassGen:
                 + choosen_lowercase
                 + choosen_uppercase
             )
-            self.password = "".join(r.sample(self.password, len(self.password)))
+            self.password = "".join(
+                r.sample(self.password, len(self.password))
+            )
 
             self.entryPassword.delete(0, END)
             self.entryPassword.insert(0, self.password)
 
-        except:
+        except PassGen:
             self.error("Invalid data, quantities must be integer numbers!")
 
     def copyClipboard(self):
